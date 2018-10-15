@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="css-cell">
+    <div class="five-star"></div>
+  </div>
+</body>
+<style>
+  .css-cell {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .five-star {
+    position: absolute;
+    top: 35%;
+    right: 50%;
+    transform: translate(-50%, -50%) scale(8);
+    width: 0;
+    height: 0;
+    display: block;
+    border-left: 3.04px solid transparent;
+    border-right: 3.24px solid transparent;
+    border-bottom: 10px solid #98DBE3;
+    -webkit-filter: drop-shadow(1px .5px 1px #ccc);
+    cursor: pointer;
+  }
+
+  .five-star:before {
+    content: "";
+    position: absolute;
+    top: 8.65px;
+    left: -8.7px;
+    width: 0;
+    height: 0;
+    color: #98DBE3;
+    display: block;
+    border-left: 12.5px solid transparent;
+    border-right: 12.5px solid transparent;
+    border-bottom: 9.08px solid #98DBE3;
+    transform-origin: top center;
+    transform: rotate(36deg);
+  }
+
+  .five-star:after {
+    content: "";
+    position: absolute;
+    top: 8.65px;
+    left: -15px;
+    width: 0;
+    height: 0;
+    color: #98DBE3;
+    display: block;
+    border-left: 12.5px solid transparent;
+    border-right: 12.5px solid transparent;
+    border-bottom: 9.08px solid #98DBE3;
+    transform-origin: top center;
+    transform: rotate(-36deg);
+  }
+</style>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="css-cell">
+    <div class="notching"></div>
+  </div>
+</body>
+<style>
+  .css-cell {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .notching {
+    position: absolute;
+    width: 200px;
+    padding: 60px 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background:
+      linear-gradient(135deg, transparent 15px, deeppink 0) top left,
+      linear-gradient(-135deg, transparent 15px, deeppink 0) top right,
+      linear-gradient(-45deg, transparent 15px, deeppink 0) bottom right,
+      linear-gradient(45deg, transparent 15px, deeppink 0) bottom left;
+    /*参数分别为: linear-gradient(角度，颜色及分布，颜色及分布) background-position*/
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+  }
+</style>
+
+</html>

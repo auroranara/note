@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="css-cell">
+    <div class="stripe"></div>
+  </div>
+  <div class="css-cell">
+    <div class="wave-stripe"></div>
+  </div>
+  <div class="css-cell">
+    <div class="arrow-stripe"></div>
+  </div>
+</body>
+<style>
+  .css-cell {
+    position: relative;
+    width: 100%;
+    height: 250px;
+  }
+
+  .stripe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: (-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: .5em;
+    background: repeating-linear-gradient(45deg, #CC9999, #CC9999 15px, #CCCCCC 15px, #CCCCCC 30px);
+    /* 从0-15px为 #CC9999,从15px-30px为#CCCCCC,第一个#CC9999为开始位置 */
+  }
+
+  .wave-stripe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: (-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: .5em;
+    background: linear-gradient(135deg, deeppink 25%, transparent 25%),
+      linear-gradient(225deg, deeppink 25%, transparent 25%),
+      linear-gradient(315deg, deeppink 25%, transparent 25%),
+      linear-gradient(45deg, deeppink 25%, transparent 25%);
+    background-size: 40px 40px;
+    background-repeat: repeat;
+  }
+
+  .arrow-stripe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: (-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: .5em;
+    background:
+      linear-gradient(45deg, #92baac 45px, transparent 45px)64px 64px,
+      linear-gradient(45deg, #92baac 45px, transparent 45px, transparent 91px, #e1ebbd 91px, #e1ebbd 135px, transparent 135px),
+      linear-gradient(-45deg, #92baac 23px, transparent 23px, transparent 68px, #92baac 68px, #92baac 113px, transparent 113px, transparent 158px, #92baac 158px);
+    background-size: 128px 128px;
+    background-color: #e1ebbd;
+  }
+</style>
+
+</html>

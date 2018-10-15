@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="css-cell">
+    <div class="trapezoid"></div>
+  </div>
+</body>
+<style>
+  .css-cell {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .trapezoid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    padding: 60px;
+  }
+
+  .trapezoid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: perspective(40px) rotateX(5deg);
+    transform-origin: bottom;
+    background: dodgerblue;
+  }
+</style>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="css-cell">
+    <div class="arc"></div>
+  </div>
+</body>
+<style>
+  .css-cell {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .arc {
+    position: absolute;
+    width: 80px;
+    padding: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background:
+      radial-gradient(circle at top left,
+      transparent 15px, yellowgreen 0) top left,
+      radial-gradient(circle at top right,
+      transparent 15px, yellowgreen 0) top right,
+      radial-gradient(circle at bottom right,
+      transparent 15px, yellowgreen 0) bottom right,
+      radial-gradient(circle at bottom left,
+      transparent 15px, yellowgreen 0) bottom left;
+    /*参数分别为: linear-gradient(形状和位置，颜色及分布，颜色及分布) background-position*/
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+  }
+</style>
+
+</html>
