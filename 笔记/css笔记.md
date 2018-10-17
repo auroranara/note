@@ -32,9 +32,34 @@
 
 * 伪类
 
-		a:link{color:red}
-		a:visited{color:yellow}
-		a:link:hover{color:black}
+		:before
+		:after
+		:link  //未访问的链接
+		:visited  //以访问的链接
+		:hover  //:hover必须放在:link、:visited之后才生效
+		:active  //:active必须放在:hover之后才生效
+		.main div:nth-child()  // main类子元素下第n个div
+		.main div:nth-of-type(n)  //main类子元素为div中的第n个div
+
+* 伪元素(IE8不支持双冒号)
+
+		::first-line  //向文本首行设置特殊样式
+		::first-letter  //向文本首字母设置特殊样式
+		::before
+		::after
+
+	> 伪元素::before和伪类:before的比较
+	>>相同点：
+	>> 1. 写法是等效的;
+	>> 2. 都可以用来表示伪类对象，设置对象前的内容;
+	>>
+	>>不同点：
+	>> 1. 双冒号是CSS3的写法
+	>> 2. 单冒号兼容性好，但推荐双冒号
+	>>
+	>> 注意点：
+	>> 1. 伪类对象需要配合content属性使用 
+	>> 2. 伪类对象不会出现再DOM中，仅仅在CSS渲染层加入
 
 ### 2.2通用选择器
 
@@ -101,10 +126,18 @@
 	>margin-bottom:20px;margin-top:10px;就会叠加变成margin-bottom:20px;
 
 ### 定位
-
+position:static(默认)/relative/absolute/flexed
 >相对定位元素位置是相对于它在普通流中的初始位置；绝对定位与之相反，使元素的位置与文档流无关，不占据空间。
 
 >绝对定位是“相对于”距离它最近的已定位的祖先元素。
+
+#### 定位叠加
+
+* 同辈元素定位方式相同，且没设置z-index，后来者在上；
+	* relative定位和absolute定位
+* 同辈元素都是relative定位，z-index大的在上；
+* relative和absolute定位在static定位（默认）上面；
+
 
 ### 浮动与清除浮动
 >清除前一个元素的浮动可以让当前元素换行显示
