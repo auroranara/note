@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./js/pixi.min.js"></script>
+  <script src="./js/scaleToWindow.js"></script>
+</head>
+
+<body>
+
+</body>
+<style>
+  *{
+  padding: 0;
+  margin: 0;
+}
+</style>
+<script type="text/javascript">
+
+  let application = PIXI.application,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    Sprite = PIXI.Sprite,
+    TextureCache = PIXI.utils.TextureCache,
+    Rectangle = PIXI.Rectangle
+
+  let app = new PIXI.Application({
+    width: 512,
+    height: 512,
+    antialias: true,
+    transparent: false,
+    resolution: 1
+  });
+  document.body.appendChild(app.view);
+
+  scaleToWindow(app.renderer.view);
+  window.addEventListener("resize", function (event) {
+    scaleToWindow(app.renderer.view);
+  });
+
+  PIXI.loader
+    .add("image/treasureHunter.json")
+    .load(setup);
+
+  let dungeon, explorer, treasure, id, state;
+  let left = keyboard(37),
+    up = keyboard(38),
+    right = keyboard(39),
+    down = keyboard(40);
+  function setup() { // 加载完后制作精灵
+    // 添加背景
+    let dungeonTexture = TextureCache["dungeon.png"]
+    dungeon = new Sprite(dungeonTexture)
+    app.stage.addChild(dungeon)
+
+    // 添加冒险者
+    explorer = new Sprite(
+      resources["image/treasureHunter.json"].textures["explorer.png"]
+    )
+    explorer.vx = 0;// 初始速度
+    explorer.vy = 0;
+    explorer.x = 68;
+    explorer.y = app.stage.height / 2 - explorer.height / 2;
+
+    left.press = () => {
+      explorer.vx = -5;
+      explorer.vy = 0;
+    };
+
+    left.release = () => {
+      if (!right.isDown && explorer.vx < 0) {
+        explorer.vx = 0;
+      }
+    };
+
+    up.press = () => {
+      explorer.vy = -5;
+      explorer.vx = 0;
+    };
+    up.release = () => {
+      if (!down.isDown && explorer.vy < 0) {
+        explorer.vy = 0;
+      }
+    };
+
+    right.press = () => {
+      explorer.vx = 5;
+      explorer.vy = 0;
+    };
+    right.release = () => {
+      if (!left.isDown && explorer.vx > 0) {
+        explorer.vx = 0;
+      }
+    };
+
+    down.press = () => {
+      explorer.vy = 5;
+      explorer.vx = 0;
+    };
+    down.release = () => {
+      if (!up.isDown && explorer.vy > 0) {
+        explorer.vy = 0;
+      }
+    };
+
+    app.stage.addChild(explorer)
+
+    // 设置游戏state
+    state = play
+
+    app.ticker.add(delta => gameLoop(delta))
+
+    function gameLoop(delta) {
+      state(delta)
+    }
+    function play(delta) {
+      explorer.x += explorer.vx;
+      explorer.y += explorer.vy;
+      // explorer.x += 1 + delta;
+    }
+    // 建造宝箱
+    id = PIXI.loader.resources["image/treasureHunter.json"].textures;
+    treasure = new Sprite(id["treasure.png"])
+    treasure.x = app.stage.width - treasure.width - 48;
+    treasure.y = app.stage.height / 2 - treasure.height / 2;
+    app.stage.addChild(treasure)
+
+    // 添加出口
+    door = new Sprite(id["door.png"])
+    door.position.set(32, 0);
+    app.stage.addChild(door);
+
+    // 建造怪兽
+    let numberOfBlobs = 6,
+      spacing = 48,
+      xOffset = 150;
+
+    for (let i = 0; i < numberOfBlobs; i++) {
+      let blob = new Sprite(id["blob.png"]);
+      let x = spacing * i + xOffset;
+      let y = randomInt(0, app.stage.height - blob.height)
+
+      blob.x = x;
+      blob.y = y;
+      app.stage.addChild(blob);
+    }
+  }
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // 监听和捕获键盘事件
+  function keyboard(keyCode) {
+    let key = {};
+    key.code = keyCode;
+    key.isDown = false;
+    key.isUp = true;
+    key.press = undefined;
+    key.release = undefined;
+    //The `downHandler`
+    key.downHandler = event => {
+      if (event.keyCode === key.code) {
+        if (key.isUp && key.press) key.press();
+        key.isDown = true;
+        key.isUp = false;
+      }
+      event.preventDefault();
+    };
+
+    //The `upHandler`
+    key.upHandler = event => {
+      if (event.keyCode === key.code) {
+        if (key.isDown && key.release) key.release();
+        key.isDown = false;
+        key.isUp = true;
+      }
+      event.preventDefault();
+    };
+
+    //Attach event listeners
+    window.addEventListener(
+      "keydown", key.downHandler.bind(key), false
+    );
+    window.addEventListener(
+      "keyup", key.upHandler.bind(key), false
+    );
+    return key;
+  }
+</script>
+
+</html>

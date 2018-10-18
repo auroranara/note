@@ -1,6 +1,6 @@
 [官方文档](https://github.com/kittykatattack/learningPixi#settingup)
 
-### 开始
+# 开始
 
 * 创建Pixi应用
 ```//Create a Pixi Application
@@ -45,7 +45,7 @@ Pixi应用的默认参数相见 [文档](http://pixijs.download/release/docs/PIX
   });
   ```
 
-### Pixi sprites(精灵)
+# 记载图像、创建精灵（Sprite）
 
   >渲染器中显示的任何东西必须放在成为舞台的特殊Pixi对象中 
   ```
@@ -64,11 +64,11 @@ Pixi应用的默认参数相见 [文档](http://pixijs.download/release/docs/PIX
   let texture = PIXI.utils.TextureCache["images/anySpriteImage.png"];
   let sprite = new PIXI.Sprite(texture);
   ```
-* 完整代码
+* loader加载器是加载任何类型图像所需的全部内容，如果使用加载器，则应通过引用加载器资源对象中的纹理来创建sprite
   ```
    PIXI.loader
-    .add("image/pic01.jpg")
-    .load(setup);
+    .add("image/pic01.jpg") // 加载图片
+    .load(setup); // 所有图片加载完成后调用setup方法
 
   function setup() { // 加载完后制作精灵
     let sprite = new PIXI.Sprite(
@@ -94,3 +94,179 @@ Pixi应用的默认参数相见 [文档](http://pixijs.download/release/docs/PIX
   ])
   .load(setup);
   ```
+* 删除精灵
+
+      app.stage.removeChild(anySprite)
+
+* 隐藏精灵
+
+      anySprite.visible=false;
+### 加载器对象要点
+
+* 根据js图片对象或canvas制作精灵
+
+  * js图片对象：
+    ```
+      let base = new PIXI.BaseTexture(anyImageObject),
+      texture = new PIXI.Texture(base),
+      sprite = new PIXI.Sprite(texture);
+    ```
+  * canvas：
+    ```
+      let base = new PIXI.BaseTexture.fromCanvas(anyCanvasElement),
+    ```
+* 改变精灵的纹理(外观)
+    ```
+    anySprite.texture=PIXI.utils.TextureCache["anyTexture.png"];
+    ```
+* 指定记载文件的名称(建议少使用)
+  ```
+  PIXI.loader
+    .add("catImage", "images/cat.png")
+    .load(setup);
+  ```
+  制作精灵
+  ```
+    new Sprite(PIXI.loader.rescouses.catImage.texture)
+  ```
+* 监听加载过程
+```
+PIXI.loader
+    .add("images/cat.png")
+    .on('progress',monitor) // 当一个文件加载就调用function
+function loaderProgress(loader, resource){
+  // resource.url  记载的路径
+  // loader.progress 加载百分比
+}
+```
+
+* PIXI.loader.add(name,url,options,callback) 
+
+  >url是唯一必须的
+
+1. name: 指定加载资源的名称
+
+2. url: 加载资源的路径
+
+3. options
+
+    1. crossOrigin 请求是否跨域，自动确定
+    2. loadType
+    3. xhrType
+4. callback: 资源加载完后调用
+
+# 精灵属性
+
+### 位置
+精灵默认添加到左上角 x=0,y=0
+
+    sprite.x = 96;
+    sprite.y = 96;
+    或者
+    sprite.position.set(x, y)
+
+### 大小
+
+    sprite.width = 96;
+    sprite.height = 96;
+    或者
+    sprite.scale.x=0.5
+    sprite.scale.y=0.5
+    或者
+    sprite.scale.set(0.5, 0.5);
+### 旋转
+
+    sprite.rotation =0.5
+  具体值查看 [文档](https://www.mathsisfun.com/geometry/radians.html)
+
+### 锚点（旋转中心）
+
+anchor (锚点)：
+
+    sprite.anchor.x=0.5
+    sprite.anchor.y=0.5
+    或者
+    cat.anchor.set(x, y)
+ pivot (枢纽)：
+
+    cat.pivot.set(32, 32)
+
+> 锚点和枢纽都是类似的，pivot使用像素来移动中心点
+
+# 从图块上选取一部分制作精灵(tileset sub-image)
+
+```
+let texture = TextureCache["image/tileset.png"]
+let rectangle = new PIXI.Rectangle(192, 128, 64, 64);
+texture.frame = rectangle;
+let recket = new Sprite(texture)
+```
+
+PIXI.Rectangle对象定义的四个参数：x和y的位置以及宽高
+
+纹理有个参数叫frame，可以设置为任何rectangle对象，frame将纹理剪裁为rectangle的尺寸
+
+### 使用合并图块(使用工具Texture Packer)
+方法一：
+```
+PIXI.loader
+    .add("image/treasureHunter.json")
+    .load(setup);
+
+function set(){
+let dungeonTexture = PIXI.utils.TextureCache["dungeon.png"]
+dungeon = new Sprite(dungeonTexture)
+app.stage.addChild(dungeon)
+}
+```
+方法二：
+```
+let id=PIXI.loader.resources["treasureHunter.json"].textures
+dungeon = new Sprite(id["dungeon.png"])
+app.stage.addChild(dungeon)
+```
+# 移动精灵
+### 使用ticker添加一个循环函数，每秒循环60次
+```
+function setup() {
+  app.ticker.add(delta => gameLoop(delta));
+}
+
+function gameLoop(delta){
+
+  //Move the cat 1 pixel 
+  cat.x += 1;
+}
+```
+>将delta参数添加到猫的移动函数中，使移动和帧速率无关,一般用于慢速设备
+
+    cat.x += 1 + delta;
+### 也可以不适用ticker添加循环,使用requestAnimationFrame
+```
+function gameLoop() {
+  requestAnimationFrame(gameLoop);
+  //Move the cat
+  cat.x += 1;
+}
+
+//Start the loop
+gameLoop();
+```
+###  速度属性velocity 
+
+vx  精灵在x轴上的速度和方向
+
+vy  精灵在y轴上的速度和方向
+
+# 精灵分组
+先创建精灵
+```
+//The cat
+let cat = new Sprite(id["cat.png"]);
+cat.position.set(16, 16);
+
+//The hedgehog
+let hedgehog = new Sprite(id["hedgehog.png"]);
+hedgehog.position.set(32, 32);
+```
+
