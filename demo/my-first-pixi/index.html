@@ -14,10 +14,10 @@
 
 </body>
 <style>
-  *{
-  padding: 0;
-  margin: 0;
-}
+  * {
+    padding: 0;
+    margin: 0;
+  }
 </style>
 <script type="text/javascript">
 
@@ -72,18 +72,10 @@
     };
 
     left.release = () => {
-      if (!right.isDown && explorer.vx < 0) {
+      if (right.isUp) {
         explorer.vx = 0;
-      }
-    };
-
-    up.press = () => {
-      explorer.vy = -5;
-      explorer.vx = 0;
-    };
-    up.release = () => {
-      if (!down.isDown && explorer.vy < 0) {
-        explorer.vy = 0;
+      } else {
+        explorer.vx = 5;
       }
     };
 
@@ -92,8 +84,22 @@
       explorer.vy = 0;
     };
     right.release = () => {
-      if (!left.isDown && explorer.vx > 0) {
+      if (left.isUp) {
         explorer.vx = 0;
+      } else {
+        explorer.vx = -5;
+      }
+    };
+
+    up.press = () => {
+      explorer.vy = -5;
+      explorer.vx = 0;
+    };
+    up.release = () => {
+      if (down.isUp) {
+        explorer.vy = 0;
+      } else {
+        explorer.vy = 5;
       }
     };
 
@@ -102,8 +108,10 @@
       explorer.vx = 0;
     };
     down.release = () => {
-      if (!up.isDown && explorer.vy > 0) {
+      if (up.isUp) {
         explorer.vy = 0;
+      } else {
+        explorer.vy = -5;
       }
     };
 
