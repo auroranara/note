@@ -7,7 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <script src="./js/pixi.min.js"></script>
+  <!-- 引入监听并缩放应用宽高的方法 -->
   <script src="./js/scaleToWindow.js"></script>
+  <!-- 引入计算是否碰撞的方法 -->
+  <script src="./js/hitTestRectangle.js"></script>
 </head>
 
 <body>
@@ -26,7 +29,10 @@
     resources = PIXI.loader.resources,
     Sprite = PIXI.Sprite,
     TextureCache = PIXI.utils.TextureCache,
-    Rectangle = PIXI.Rectangle
+    Rectangle = PIXI.Rectangle,
+    Container = PIXI.Container,
+    Text = PIXI.Text,
+    TextStyle = PIXI.TextStyle
 
   let app = new PIXI.Application({
     width: 512,
@@ -46,25 +52,48 @@
     .add("image/treasureHunter.json")
     .load(setup);
 
-  let dungeon, explorer, treasure, id, state;
+  let dungeon, explorer, treasure, id, state, gameScene, gameOverScene, message;
   let left = keyboard(37),
     up = keyboard(38),
     right = keyboard(39),
     down = keyboard(40);
+
+
   function setup() { // 加载完后制作精灵
+    id = PIXI.loader.resources["image/treasureHunter.json"].textures;
+
+    // 创建游戏场景分组
+    gameScene = new Container()
+    app.stage.addChild(gameScene)
+
+    // 游戏结束场景分组
+    gameOverScene = new Container();
+    gameOverScene.visible = false
+    app.stage.addChild(gameOverScene);
+
+    // 结束场景的文字
+    let style = new TextStyle({
+      fontFamily: "Futura",
+      fontSize: 64,
+      fill: "white"
+    });
+    message = new Text("The End!", style);
+    message.x = app.renderer.width / 2 - message.width / 2;
+    message.y = app.renderer.height / 2 - message.height / 2;
+    gameOverScene.addChild(message);
+
     // 添加背景
-    let dungeonTexture = TextureCache["dungeon.png"]
-    dungeon = new Sprite(dungeonTexture)
-    app.stage.addChild(dungeon)
+    dungeon = new Sprite(id["dungeon.png"])
+    gameScene.addChild(dungeon)
+
+    console.log('width&height', { height: app.stage.height, width: app.stage.width })
 
     // 添加冒险者
-    explorer = new Sprite(
-      resources["image/treasureHunter.json"].textures["explorer.png"]
-    )
+    explorer = new Sprite(id["explorer.png"])
     explorer.vx = 0;// 初始速度
     explorer.vy = 0;
     explorer.x = 68;
-    explorer.y = app.stage.height / 2 - explorer.height / 2;
+    explorer.y = gameScene.height / 2 - explorer.height / 2;
 
     left.press = () => {
       explorer.vx = -5;
@@ -115,7 +144,8 @@
       }
     };
 
-    app.stage.addChild(explorer)
+    gameScene.addChild(explorer)
+    // console.log('explorer global', explorer.getGlobalPosition())
 
     // 设置游戏state
     state = play
@@ -126,36 +156,98 @@
       state(delta)
     }
     function play(delta) {
+      // let explorerHitsWall = contain(explorer, { x: 28, y: 10, width: 488, height: 480 })
+      // if (explorerHitsWall === undefined) {
       explorer.x += explorer.vx;
       explorer.y += explorer.vy;
+      // }
+      contain(explorer, { x: 28, y: 10, width: 488, height: 480 });
       // explorer.x += 1 + delta;
+
+      // 判断冒险者和宝箱是否碰撞
+      if (hitTestRectangle(explorer, treasure)) {
+        treasure.x = explorer.x + 8;
+        treasure.y = explorer.y + 8;
+      }
+      // 判断冒险者是否拿到宝物来到出口（宝物和出口碰撞）
+      if (hitTestRectangle(treasure, door)) {
+        state = end;
+        message.text = "You won!";
+      }
+      // 判断血条是否为空
+      if (healthBar.outer.width < 0) {
+        state = end;
+        message.text = "You lost!";
+      }
+
+      blobs.forEach(item => {
+        item.y += item.vy;
+        let blobHitsWall = contain(item, { x: 28, y: 10, width: 488, height: 480 })
+
+        if (blobHitsWall === "top" || blobHitsWall === "bottom") {
+          item.vy *= -1
+        }
+        if (hitTestRectangle(explorer, item)) {
+          explorer.alpha = 0.5;
+          healthBar.outer.width -= 1;
+        } else {
+          explorer.alpha = 1;
+        }
+      })
+
     }
     // 建造宝箱
-    id = PIXI.loader.resources["image/treasureHunter.json"].textures;
     treasure = new Sprite(id["treasure.png"])
-    treasure.x = app.stage.width - treasure.width - 48;
-    treasure.y = app.stage.height / 2 - treasure.height / 2;
-    app.stage.addChild(treasure)
+    treasure.x = gameScene.width - treasure.width - 48;
+    treasure.y = gameScene.height / 2 - treasure.height / 2;
+    gameScene.addChild(treasure)
 
     // 添加出口
     door = new Sprite(id["door.png"])
     door.position.set(32, 0);
-    app.stage.addChild(door);
+    gameScene.addChild(door);
 
     // 建造怪兽
     let numberOfBlobs = 6,
       spacing = 48,
-      xOffset = 150;
+      xOffset = 150,
+      speed = 2,
+      direction = 1,
+      blobs = [];
 
     for (let i = 0; i < numberOfBlobs; i++) {
       let blob = new Sprite(id["blob.png"]);
       let x = spacing * i + xOffset;
-      let y = randomInt(0, app.stage.height - blob.height)
+      let y = randomInt(0, gameScene.height - blob.height)
 
       blob.x = x;
       blob.y = y;
-      app.stage.addChild(blob);
+      blob.vy = speed * direction;
+      direction *= -1;
+      blobs.push(blob);
+      gameScene.addChild(blob);
     }
+
+    // 建造血条
+    let healthBar = new PIXI.DisplayObjectContainer()
+    healthBar.position.set(app.stage.width - 170, 4);
+    gameScene.addChild(healthBar);
+
+    // 血条黑色背景
+    let innerBar = new PIXI.Graphics()
+    innerBar.beginFill(0x000000);
+    innerBar.drawRect(0, 0, 128, 8);
+    innerBar.endFill();
+    healthBar.addChild(innerBar);
+
+    let outerBar = new PIXI.Graphics()
+    outerBar.beginFill(0xFF3300);
+    outerBar.drawRect(0, 0, 128, 8);
+    outerBar.endFill()
+    healthBar.addChild(outerBar);
+
+    healthBar.outer = outerBar;
+
   }
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -197,6 +289,42 @@
       "keyup", key.upHandler.bind(key), false
     );
     return key;
+  }
+
+  function contain(sprite, container) {
+
+    let collision = undefined;
+
+    //Left
+    if (sprite.x < container.x) {
+      sprite.x = container.x;
+      collision = "left";
+    }
+
+    //Top
+    if (sprite.y < container.y) {
+      sprite.y = container.y;
+      collision = "top";
+    }
+
+    //Right
+    if (sprite.x + sprite.width > container.width) {
+      sprite.x = container.width - sprite.width;
+      collision = "right";
+    }
+
+    //Bottom
+    if (sprite.y + sprite.height > container.height) {
+      sprite.y = container.height - sprite.height;
+      collision = "bottom";
+    }
+
+    //Return the `collision` value
+    return collision;
+  }
+  function end() {
+    gameScene.visible = false;
+    gameOverScene.visible = true;
   }
 </script>
 

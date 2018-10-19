@@ -47,6 +47,8 @@ Pixi应用的默认参数相见 [文档](http://pixijs.download/release/docs/PIX
 
 # 记载图像、创建精灵（Sprite）
 
+  [Sprite详细列表](http://pixijs.download/release/docs/PIXI.Sprite.html)
+
   >渲染器中显示的任何东西必须放在成为舞台的特殊Pixi对象中 
   ```
   app.stage 
@@ -258,15 +260,239 @@ vx  精灵在x轴上的速度和方向
 
 vy  精灵在y轴上的速度和方向
 
+    cat.x+=cat.vx;
+
 # 精灵分组
-先创建精灵
+ 先创建精灵
 ```
-//The cat
+// The cat
 let cat = new Sprite(id["cat.png"]);
 cat.position.set(16, 16);
 
-//The hedgehog
+// The hedgehog
 let hedgehog = new Sprite(id["hedgehog.png"]);
 hedgehog.position.set(32, 32);
 ```
+创建container，把精灵加入分组
+
+    let animals=new PIXI.Container()
+
+    animals.addChild(cat);
+    animals.addChild(hedgehog);
+把container放入舞台
+
+    app.stage.addChild(animals);
+
+### 获取分组内所有精灵 
+
+    animals.children
+
+## 分组中本地定位和全局定位
+* 本地定位：
+
+    childSprite.x
+    childSprite.y
+
+* 全局定位：
+
+    parentSprite.toGlobal(childSprite.position)
+
+* 如果不知道精灵的父容器是什么：
+
+    cat.parent.toGlobal(cat.position)
+
+* 最好的方法，使用getGlobalPosition方法：
+
+    cat.getGlobalPosition().x
+    cat.getGlobalPosition().y
+
+* 将全局定位转换为本地的定位：
+
+    sprite.toLocal(sprite.position, anyOtherSprite)
+
+# 用 ParticleContainer  对精灵进行分组
+> 一种替代的、高性能分组方法，比container更快
+
+> 缺点：
+>>只有如下属性：x, y, width, height, scale, pivot, alpha(透明度), visible
+>
+>>不能包含嵌套子集
+>
+>>每个 ParticleContainer只能有一个纹理，想要精灵有不同外观不得不用spritesheet
+
+### 在创建时可以有四个参数
+    let superFastSprites = new PIXI.particles.ParticleContainer(maxSize, properties, batchSize, autoResize)
+
+* maxSize 默认1500
+* properties （如果想更改以下参数，设置为true）
+  
+  * scale  
+  * position 默认true
+  * rotation
+  * uvs 只有在精灵改变纹理的时候设置为true
+  * alphaAndTint 
+* batchSize
+* autoResize
+
+# PIXI图像基元（Graphic Primitives）
+
+上文都是用纹理来制作精灵，但是PIXI有低级绘图工具，可以制作矩形，形状，线条，复杂多边形和文本。
+
+* 矩形
+  ```
+  let rectangle = new PIXI.Graphics();
+  rectangle.lineStyle(4, 0xFF3300, 1);
+  rectangle.beginFill(0x66CCFF);
+  rectangle.drawRect(0, 0, 64, 64); // 开始点x y width height
+  rectangle.endFill();
+  rectangle.x = 170;
+  rectangle.y = 170;
+  rectangle.tint=0xff3300; // 着色
+  app.stage.addChild(rectangle);
+  ```
+* 圆
+  ```
+  let circle = new PIXI.Graphics();
+  circle.beginFill(0x9966FF);
+  circle.drawCircle(0, 0, 32); // 圆心位置x y 半径
+  circle.endFill();
+  circle.x = 64;
+  circle.y = 130;
+  app.stage.addChild(circle);
+  ```
+* 椭圆
+
+      drawEllipse(x, y, width, height);
+
+* 圆角矩形
+
+      drawRoundedRect(x, y, width, height, cornerRadius)
+
+* 直线
+  ```
+  let line = new PIXI.Graphics();
+  line.lineStyle(4, 0xFFFFFF, 1);
+  line.moveTo(0, 0);
+  line.lineTo(80, 50);
+  line.x = 32;
+  line.y = 32;
+  app.stage.addChild(line);
+  ```
+
+* 多边形
+
+  ```
+  let triangle = new Graphics();
+  let path = [
+    point1X, point1Y, // 每个点的x和y
+    point2X, point2Y,
+    point3X, point3Y
+  ];
+
+  triangle.drawPolygon(path);
+  ```
+* 显示文字
+
+  最简单的方式：
+  ```
+  let message = new PIXI.Text("Hello Pixi!");
+  message.position.set(54, 96);
+  app.stage.addChild(message);
+  ```
+  如果要设置更多样式：
+  ```
+  // 创建一个样式对象
+  let style = new PIXI.TextStyle({
+  fontFamily: "Arial",
+  fontSize: 36,
+  fill: "white",
+  stroke: '#ff3300',
+  strokeThickness: 4,
+  dropShadow: true,
+  dropShadowColor: "#000000",
+  dropShadowBlur: 4,
+  dropShadowAngle: Math.PI / 6,
+  dropShadowDistance: 6,
+  });
+  // 然后将样式对象放在Text对象的第二个参数
+  let message = new PIXI.Text("Hello Pixi!", style);
+  ```
+  创建之后改变文本内容和样式：
+
+      message.text = "Text changed!";
+      message.style = {fill: "black", font: "16px PetMe64"};
+
+  包含很长的文本：
+
+      message.style = {wordWrap: true, wordWrapWidth: 100, align: center};
+      // 对齐不会影响单行文本
+
+  使用自定义字体文件：
+  ```
+  @font-face {
+    font-family: "fontFamilyName";
+    src: url("fonts/fontFile.ttf");
+  }
+  ```
+# 碰撞检测
+
+* hitTestRectangle 检测是否有矩形精灵触碰
+
+具体函数：
+
+```
+function hitTestRectangle(r1, r2) {
+
+  //Define the variables we'll need to calculate
+  let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+  //hit will determine whether there's a collision
+  hit = false;
+
+  //Find the center points of each sprite
+  r1.centerX = r1.x + r1.width / 2;
+  r1.centerY = r1.y + r1.height / 2;
+  r2.centerX = r2.x + r2.width / 2;
+  r2.centerY = r2.y + r2.height / 2;
+
+  //Find the half-widths and half-heights of each sprite
+  r1.halfWidth = r1.width / 2;
+  r1.halfHeight = r1.height / 2;
+  r2.halfWidth = r2.width / 2;
+  r2.halfHeight = r2.height / 2;
+
+  //Calculate the distance vector between the sprites
+  vx = r1.centerX - r2.centerX;
+  vy = r1.centerY - r2.centerY;
+
+  //Figure out the combined half-widths and half-heights
+  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+  //Check for a collision on the x axis
+  if (Math.abs(vx) < combinedHalfWidths) {
+
+    //A collision might be occurring. Check for a collision on the y axis
+    if (Math.abs(vy) < combinedHalfHeights) {
+
+      //There's definitely a collision happening
+      hit = true;
+    } else {
+
+      //There's no collision on the y axis
+      hit = false;
+    }
+  } else {
+
+    //There's no collision on the x axis
+    hit = false;
+  }
+
+  //`hit` will be either `true` or `false`
+  return hit;
+};
+```
+>比较两个精灵中心点距离 和 两精灵一半距离相加的值
+
+    hitTestRectangle(spriteOne, spriteTwo) // 如果触碰返回true
 
