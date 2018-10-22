@@ -86,67 +86,6 @@
     dungeon = new Sprite(id["dungeon.png"])
     gameScene.addChild(dungeon)
 
-    console.log('width&height', { height: app.stage.height, width: app.stage.width })
-
-    // 添加冒险者
-    explorer = new Sprite(id["explorer.png"])
-    explorer.vx = 0;// 初始速度
-    explorer.vy = 0;
-    explorer.x = 68;
-    explorer.y = gameScene.height / 2 - explorer.height / 2;
-
-    left.press = () => {
-      explorer.vx = -5;
-      explorer.vy = 0;
-    };
-
-    left.release = () => {
-      if (right.isUp) {
-        explorer.vx = 0;
-      } else {
-        explorer.vx = 5;
-      }
-    };
-
-    right.press = () => {
-      explorer.vx = 5;
-      explorer.vy = 0;
-    };
-    right.release = () => {
-      if (left.isUp) {
-        explorer.vx = 0;
-      } else {
-        explorer.vx = -5;
-      }
-    };
-
-    up.press = () => {
-      explorer.vy = -5;
-      explorer.vx = 0;
-    };
-    up.release = () => {
-      if (down.isUp) {
-        explorer.vy = 0;
-      } else {
-        explorer.vy = 5;
-      }
-    };
-
-    down.press = () => {
-      explorer.vy = 5;
-      explorer.vx = 0;
-    };
-    down.release = () => {
-      if (up.isUp) {
-        explorer.vy = 0;
-      } else {
-        explorer.vy = -5;
-      }
-    };
-
-    gameScene.addChild(explorer)
-    // console.log('explorer global', explorer.getGlobalPosition())
-
     // 设置游戏state
     state = play
 
@@ -158,8 +97,8 @@
     function play(delta) {
       // let explorerHitsWall = contain(explorer, { x: 28, y: 10, width: 488, height: 480 })
       // if (explorerHitsWall === undefined) {
-      explorer.x += explorer.vx;
-      explorer.y += explorer.vy;
+      explorer.x += explorer.vx * delta;
+      explorer.y += explorer.vy * delta;
       // }
       contain(explorer, { x: 28, y: 10, width: 488, height: 480 });
       // explorer.x += 1 + delta;
@@ -247,6 +186,64 @@
     healthBar.addChild(outerBar);
 
     healthBar.outer = outerBar;
+
+    // 添加冒险者
+    explorer = new Sprite(id["explorer.png"])
+    explorer.vx = 0;// 初始速度
+    explorer.vy = 0;
+    explorer.x = 68;
+    explorer.y = gameScene.height / 2 - explorer.height / 2;
+
+    left.press = () => {
+      explorer.vx = -5;
+      explorer.vy = 0;
+    };
+
+    left.release = () => {
+      if (right.isUp) {
+        explorer.vx = 0;
+      } else {
+        explorer.vx = 5;
+      }
+    };
+
+    right.press = () => {
+      explorer.vx = 5;
+      explorer.vy = 0;
+    };
+    right.release = () => {
+      if (left.isUp) {
+        explorer.vx = 0;
+      } else {
+        explorer.vx = -5;
+      }
+    };
+
+    up.press = () => {
+      explorer.vy = -5;
+      explorer.vx = 0;
+    };
+    up.release = () => {
+      if (down.isUp) {
+        explorer.vy = 0;
+      } else {
+        explorer.vy = 5;
+      }
+    };
+
+    down.press = () => {
+      explorer.vy = 5;
+      explorer.vx = 0;
+    };
+    down.release = () => {
+      if (up.isUp) {
+        explorer.vy = 0;
+      } else {
+        explorer.vy = -5;
+      }
+    };
+
+    gameScene.addChild(explorer)
 
   }
   function randomInt(min, max) {

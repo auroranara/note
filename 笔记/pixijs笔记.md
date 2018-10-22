@@ -1,5 +1,4 @@
-[官方文档](https://github.com/kittykatattack/learningPixi#settingup)
-
+[官方文档](http://pixijs.download/release/docs/index.html)
 # 开始
 
 * 创建Pixi应用
@@ -159,7 +158,9 @@ function loaderProgress(loader, resource){
 
 # 精灵属性
 
-### 位置
+> 精灵层叠顺序：依次增加
+
+* 位置
 精灵默认添加到左上角 x=0,y=0
 
     sprite.x = 96;
@@ -167,7 +168,7 @@ function loaderProgress(loader, resource){
     或者
     sprite.position.set(x, y)
 
-### 大小
+* 大小
 
     sprite.width = 96;
     sprite.height = 96;
@@ -176,22 +177,24 @@ function loaderProgress(loader, resource){
     sprite.scale.y=0.5
     或者
     sprite.scale.set(0.5, 0.5);
-### 旋转
+* 旋转
 
     sprite.rotation =0.5
   具体值查看 [文档](https://www.mathsisfun.com/geometry/radians.html)
 
-### 锚点（旋转中心）
+* 旋转中心（两种效果相同）
 
-anchor (锚点)：
-
-    sprite.anchor.x=0.5
-    sprite.anchor.y=0.5
-    或者
-    cat.anchor.set(x, y)
- pivot (枢纽)：
-
-    cat.pivot.set(32, 32)
+  anchor (锚点)：
+  ```
+  sprite.anchor.x=0.5
+  sprite.anchor.y=0.5
+  或者
+  cat.anchor.set(x, y)
+  ```
+  pivot (枢纽)：
+  ```
+  cat.pivot.set(32, 32)
+  ```
 
 > 锚点和枢纽都是类似的，pivot使用像素来移动中心点
 

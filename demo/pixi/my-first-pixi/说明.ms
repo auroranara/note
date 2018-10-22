@@ -1,0 +1,1 @@
+参照pixi官网[demo](https://github.com/kittykatattack/learningPixi#settingup)制作的地下城小游戏
