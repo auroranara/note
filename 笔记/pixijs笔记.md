@@ -1,4 +1,6 @@
-[官方文档](http://pixijs.download/release/docs/index.html)
+[pixijs官方文档](http://pixijs.download/release/docs/index.html)
+
+[一些例子](https://pixijs.io/examples/#/basics/basic.js)
 # 开始
 
 * 创建Pixi应用
