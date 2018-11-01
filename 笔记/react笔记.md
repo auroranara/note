@@ -1,6 +1,14 @@
 # 工具
 chrome浏览器扩展工具 Redux DevTools React Developer Tools
 
+# 开始
+
+### create-react-app脚手架
+
+    cnpm install -g create-react-app
+    create-react-app my-project
+
+
 # Component vs PureComponent vs Stateless Functional Component（无状态组件）
 
 * Stateless Functional Component（无状态组件）

@@ -134,7 +134,7 @@ position:static(默认)/relative/absolute/flexed
 #### 定位叠加
 
 * 同辈元素定位方式相同，且没设置z-index，后来者在上；
-	* relative定位和absolute定位
+	* relative定位和absolute定位优先级相同
 * 同辈元素都是relative定位，z-index大的在上；
 * relative和absolute定位在static定位（默认）上面；
 
