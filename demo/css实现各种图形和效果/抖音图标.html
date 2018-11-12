@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="main">
+    <div class="content"></div>
+  </div>
+</body>
+<style>
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .content {
+    position: relative;
+    width: 37px;
+    height: 218px;
+    background: #fff;
+    filter: drop-shadow(-10px -10px 0 #24f6f0) contrast(150%) brightness(110%);
+    /* filter:drop-shadow() 给合成图片添加阴影效果 */
+    box-shadow: 11.6px 10px 0 0 #fe2d52;
+  }
+
+  .content::after {
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border: 30px solid #fff;
+    border-right: 30px solid transparent;
+    border-top: 30px solid transparent;
+    border-left: 30px solid transparent;
+    top: -100px;
+    right: -172px;
+    border-radius: 100%;
+    transform: rotate(45deg);
+    filter: drop-shadow(14px 0 0 #fe2d52);
+  }
+
+  .content::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 37px solid #fff;
+    border-top: 37px solid transparent;
+    border-radius: 50%;
+    top: 123px;
+    left: -137px;
+    transform: rotate(45deg);
+    filter: drop-shadow(16px 0px 0 #fe2d52);
+  }
+</style>
+
+</html>
