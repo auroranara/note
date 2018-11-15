@@ -126,7 +126,7 @@
 	>margin-bottom:20px;margin-top:10px;就会叠加变成margin-bottom:20px;
 
 ### 定位
-position:static(默认)/relative/absolute/flexed
+`position:static(默认)/relative/absolute/flexed`
 >相对定位元素位置是相对于它在普通流中的初始位置；绝对定位与之相反，使元素的位置与文档流无关，不占据空间。
 
 >绝对定位是“相对于”距离它最近的已定位的祖先元素。
@@ -184,10 +184,76 @@ position:static(默认)/relative/absolute/flexed
 
 ### 渐变
 
+1. liner-gradient
 
-# 5.对链接应用样式
+	> 线性渐变。语法如下：
 
-# 7.表单和数据表格应用样式
+	`linear-gradient( 
+  [ <angle> | to <side-or-corner> ,]? <color-stop> ,<color-stop>...)`
 
-# 8.布局
+	`<side-or-corner>`：[ left | right ] || [ top | bottom ]  
+
+	如果是to right ,渐变从左侧边开始
+
+	`<angle>` ：
+
+	![liner-gradient001](../image/liner-gradient001.png)
+
+	例： `background: linear-gradient(45deg, blue 20%, transparent 50%);`
+
+	![liner-gradient003](../image/liner-gradient003.png)
+
+	例： `background: linear-gradient(45deg, blue 50%, transparent 0);`
+
+	如果第一个颜色比例更大，渐变没有过渡
+
+	![liner-gradient002](../image/liner-gradient002.png)
+
+	例： `background: linear-gradient(45deg, blue, blue 20%, green 20%, green 50%);`
+
+	从0到20%为蓝色，从20%到结束为绿色
+
+	![liner-gradient004](../image/liner-gradient004.png)
+
+2. repeating-liner-gradient 参数与liner-gradient相似
+
+3. [radial-gradient](https://developer.mozilla.org/zh-CN/docs/Web/CSS/radial-gradient)
+
+	> 径向渐变不同于线性渐变，他是从“一个点”向四周的颜色渐变。语法如下：
+
+	>`radial-gradient([shape||length||extend-keyword] at position, start color,...,end color)`
+
+	`<shape>`：circle | ellipse（椭圆）
+
+	`<length>`：圆的半径（10px） 或 椭圆的半径（需要两个参数如 10px 10px）
+
+	`<position>`： 设置起点位置 参数：
+	top | left top | 10px 10px | 50% 50% ，如果缺少 默认为center；
+
+	`<extend-keyword>` ： 表示径向渐变的结束方式
+	
+	| 值 | 描述 |
+	| :---- | :---- |
+	| closest-side | 指定渐变的半径长度为从圆心到离圆形最近的边 |
+	| closest-corner | 指定渐变的半径长度为从圆形到离圆心最近的角 |
+	| farthest-side | 指定径向渐变的半径长度为从圆心到离圆心最远的边 |
+	| closest-side | 指定径向渐变的半径长度为从圆心到离圆心最远的角 |
+	|-|
+
+	例：	`background: radial-gradient(blue 0%,green 20%,red 100%);`
+	  
+	从中心点开始，渐变色为blue，结束渐变色为red
+
+	![radial-gradient001](../image/radial-gradient001.png)
+
+	例： `background: radial-gradient(blue 50%,green 0);`
+
+	如果第一个颜色比例更大，渐变没有过渡
+
+	![radial-gradient002](../image/radial-gradient002.png)
+
+4. repeating-radial-gradient 参数与radial-gradient相似
+
+
+	
 
