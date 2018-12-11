@@ -10,7 +10,7 @@
  1. 根元素(html)或其他包含它的元素
  2. float不为none
  3. overflow不为visible
- 4. position为absoluted或flexed
+ 4. position为absolute或flexed
  5. dispaly为inline-block或table-cell或table-caption
 
 * 特性
@@ -197,23 +197,23 @@
 
 	`<angle>` ：
 
-	![liner-gradient001](../image/liner-gradient001.png)
+	![liner-gradient001](./image/liner-gradient001.png)
 
 	例： `background: linear-gradient(45deg, blue 20%, transparent 50%);`
 
-	![liner-gradient003](../image/liner-gradient003.png)
+	![liner-gradient003](./image/liner-gradient003.png)
 
 	例： `background: linear-gradient(45deg, blue 50%, transparent 0);`
 
 	如果第一个颜色比例更大，渐变没有过渡
 
-	![liner-gradient002](../image/liner-gradient002.png)
+	![liner-gradient002](./image/liner-gradient002.png)
 
 	例： `background: linear-gradient(45deg, blue, blue 20%, green 20%, green 50%);`
 
 	从0到20%为蓝色，从20%到结束为绿色
 
-	![liner-gradient004](../image/liner-gradient004.png)
+	![liner-gradient004](./image/liner-gradient004.png)
 
 2. repeating-liner-gradient 参数与liner-gradient相似
 
@@ -244,13 +244,13 @@
 	  
 	从中心点开始，渐变色为blue，结束渐变色为red
 
-	![radial-gradient001](../image/radial-gradient001.png)
+	![radial-gradient001](./image/radial-gradient001.png)
 
 	例： `background: radial-gradient(blue 50%,green 0);`
 
 	如果第一个颜色比例更大，渐变没有过渡
 
-	![radial-gradient002](../image/radial-gradient002.png)
+	![radial-gradient002](./image/radial-gradient002.png)
 
 4. repeating-radial-gradient 参数与radial-gradient相似
 

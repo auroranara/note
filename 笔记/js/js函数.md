@@ -77,7 +77,7 @@ Set 对象允许你存储任何类型的唯一值，无论是原始值或者是�
 	test(isOdd,[1,2,3,4,5]) // [1,3,5]
 
 
-***判断两个字符串是否是同态**
+**判断两个字符串是否是同态**
 >两个字符串，如果A字符串中的每一个字符都可以在B字符串中找到唯一对应，并且顺序一一对应；如果存在这样的函数，那么A和B同态。例如：'abb'和'cdd'
 ```
 const fun = (a, b) => {
@@ -94,3 +94,32 @@ const fun = (a, b) => {
   return true
 }
 ```
+**Math.max找出数组中最大（小）值**
+
+`Math.max(1,2,3)` // 3
+
+`Math.max('1','2','3')` // 3
+
+`Math.max.apply(null,[1,2,3,4])`  // 3
+
+
+**给数组定义一个function，返回重复元素**
+
+```Array.prototype.extraChar = function(){
+      var cacheExtraChar = []; // 缓存重复出现的字符
+      var that = this; // 缓存 this;
+      this.map(function(item,index){
+          // 就是向前往后查找一遍和从后往前查找一遍,不等就是没有重复
+          (that.indexOf(item) !== that.lastIndexOf(item)) && cacheExtraChar.indexOf(item) === -1 ? cacheExtraChar.push(item) : -1;
+      });
+      return cacheExtraChar;
+  }
+```
+	
+**判断回文字符串**
+const isHuiWen=str=>str===str.split('').reverse().join('')
+
+**判断同字母异序字符串**
+const isTong=(str1,str2)=str1.split('').sort().join('')===str2.split('').sort().join('')
+
+
