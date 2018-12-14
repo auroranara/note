@@ -16,7 +16,7 @@
 	} 
 	// reduce方法传入一个callback和一个参数[]（这个参数为第一次调用callback时初始值a的值）,
 	如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
-### 四舍五入
+### 保持x位小数
 
 	function fun(num,x){return Number(`${Math.round(`${num}e${x}`)}e-${x}`)}
 即 Math.round(2.256\*10^2)*10^-2=2.26
@@ -122,4 +122,48 @@ const isHuiWen=str=>str===str.split('').reverse().join('')
 **判断同字母异序字符串**
 const isTong=(str1,str2)=str1.split('').sort().join('')===str2.split('').sort().join('')
 
+**快速排序算法**
+```
+// 一次快排 返回key值，小于key的值在key前，大于key的值在key后
+const partition = (arr, left, right) => {
+  const key = arr[left]
+  while (left < right) {
+    while (left < right && key < arr[right]) {
+      right--;
+    }
+    arr[left] = arr[right]
+    while (left < right && key > arr[left]) {
+      left++;
+    }
+    arr[right] = arr[left]
+  }
+  arr[left] = key
+  return left
+}
+// 把一次快排后的key左侧和key右侧再次快排
+const quickSort = (arr, left = 0, right = arr.length - 1) => {
+  if (left >= right) return
+  const pivot = partition(arr, left, right)
+  quickSort(arr, left, pivot - 1)
+  quickSort(arr, pivot + 1, right)
+  return arr
+}
+```
+
+**二分查找**
+> 传入的数组必须已排序（或者用使用sort排序）,target为查找的目标参数
+```
+function binSearch(target, arr, start=0, end=arr.length) {
+  if(start>=end)return -1
+  var mid = Math.floor((start + end) / 2);
+	 // 找到直接返回下标
+  if (target == arr[mid]) {
+    return mid;
+  } else if (target > arr[mid]) {
+    return binSearch(target, arr, mid+1, end);
+  } else {
+    return binSearch(target, arr, start, mid);
+  }
+}
+```
 

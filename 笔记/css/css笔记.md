@@ -157,7 +157,7 @@
 
 # 4.背景图像的效果
 
-### 背景图像基础
+## 背景图像基础
 
 		background:url(/img/a.png);
 		background-size:100% 100%;// 水平和垂直大小
@@ -168,7 +168,7 @@
 
 		background:url(/img/a.png) no-repeat left center;
 
-### 圆角框
+## 圆角框
 
 * border-radius
 		
@@ -176,13 +176,13 @@
 		-webkit-border-radius:1em;// 在chrome浏览器中支持使用 -webkit
 
 
-### 不透明度
+## 不透明度
 
 * css不透明度
 
 		opacity:0.8;
 
-### 渐变
+## 渐变
 
 1. liner-gradient
 
@@ -205,7 +205,7 @@
 
 	例： `background: linear-gradient(45deg, blue 50%, transparent 0);`
 
-	如果第一个颜色比例更大，渐变没有过渡
+	如果第一个颜色比例大于或等于第二个颜色的比例，渐变没有过渡
 
 	![liner-gradient002](./image/liner-gradient002.png)
 
@@ -230,7 +230,7 @@
 	`<position>`： 设置起点位置 参数：
 	top | left top | 10px 10px | 50% 50% ，如果缺少 默认为center；
 
-	`<extend-keyword>` ： 表示径向渐变的结束方式
+	`<extend-keyword>` ： 表示径向渐变的结束方式，如下所示
 	
 	| 值 | 描述 |
 	| :---- | :---- |
@@ -242,7 +242,7 @@
 
 	例：	`background: radial-gradient(blue 0%,green 20%,red 100%);`
 	  
-	从中心点开始，渐变色为blue，结束渐变色为red
+	从中心点开始，渐变色为blue，结束渐变色为red,默认从圆心开始渐变
 
 	![radial-gradient001](./image/radial-gradient001.png)
 
@@ -253,6 +253,8 @@
 	![radial-gradient002](./image/radial-gradient002.png)
 
 4. repeating-radial-gradient 参数与radial-gradient相似
+
+## 混合模式
 
 
 	
