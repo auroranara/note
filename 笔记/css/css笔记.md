@@ -10,14 +10,16 @@
  1. 根元素(html)或其他包含它的元素
  2. float不为none
  3. overflow不为visible
- 4. position为absolute或flexed
- 5. dispaly为inline-block或table-cell或table-caption
+ 4. position为absolute或fixed
+ 5. dispaly为inline-block或table(包括table-cell或table-caption)
 
 * 特性
  1. 对应一个独立、封闭的渲染区域，子元素的CSS样式不会影响BFC父元素;
  2. 浮动子元素参与BFC父元素高度计算，解决高度坍塌;
  3. 占据文档流的BFC元素，可以识别浮动兄弟元素（不会被覆盖）;
  4. 占据文档流的BFC元素,width为auto时，会占满当前行剩余宽度;
+ 5. 属于同一个BFC的两个相邻Box的margin会发生重叠;
+ 6. BFC中的子元素不会超出包含块;
 # 2选择器
 ### 2.1常用选择器
 * 类型选择器（元素选择器）
@@ -116,6 +118,13 @@
 **3个最重要的css概念：浮动、定位、盒模型**
 
 ### 盒模型
+
+`页面渲染时，dom元素所采用的布局模型。可通过box-sizing进行设置`
+
+* content-box (W3C标准盒模型)
+* border-box	（IE盒模型）
+* padding-box
+* margin-box
 
 页面上每个元素可以看作一个矩形框，由元素内容、内边距、边框和外边距组成。
 
@@ -233,11 +242,11 @@
 	`<extend-keyword>` ： 表示径向渐变的结束方式，如下所示
 	
 	| 值 | 描述 |
-	| :---- | :---- |
+	| :-- | :-- |
 	| closest-side | 指定渐变的半径长度为从圆心到离圆形最近的边 |
 	| closest-corner | 指定渐变的半径长度为从圆形到离圆心最近的角 |
 	| farthest-side | 指定径向渐变的半径长度为从圆心到离圆心最远的边 |
-	| closest-side | 指定径向渐变的半径长度为从圆心到离圆心最远的角 |
+	| farthest-corner | 指定径向渐变的半径长度为从圆心到离圆心最远的角 |
 	|-|
 
 	例：	`background: radial-gradient(blue 0%,green 20%,red 100%);`

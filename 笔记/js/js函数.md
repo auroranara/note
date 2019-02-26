@@ -151,13 +151,13 @@ const quickSort = (arr, left = 0, right = arr.length - 1) => {
 ```
 
 **二分查找**
-> 传入的数组必须已排序（或者用使用sort排序）,target为查找的目标参数
+> 传入的数组必须已排序（或者使用sort排序）,target为查找的目标参数
 ```
 function binSearch(target, arr, start=0, end=arr.length) {
   if(start>=end)return -1
   var mid = Math.floor((start + end) / 2);
-	 // 找到直接返回下标
-  if (target == arr[mid]) {
+	 // 找到直接返回
+  if (target === arr[mid]) {
     return mid;
   } else if (target > arr[mid]) {
     return binSearch(target, arr, mid+1, end);

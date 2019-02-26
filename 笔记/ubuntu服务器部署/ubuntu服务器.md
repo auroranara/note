@@ -26,34 +26,34 @@
 
   * 开头user root(修改服务器上的账号root)
   * 修改server
-  ```
-  server{
-		listen 	8080;
-		location /harbor {
-			alias 	/root/web/output/harbor;
-			index	index.html index.htm;
-			autoindex on; 
-			autoindex_localtime on;
-		}
-		location /images {
-			root 	/root;
-			autoindex on;
-		}
-	}
+    ```
+    server{
+      listen 	8080;
+      location /harbor {
+        alias 	/root/web/output/harbor;
+        index	index.html index.htm;
+        autoindex on; 
+        autoindex_localtime on;
+      }
+      location /images {
+        root 	/root;
+        autoindex on;
+      }
+    }
 
 
-  ```
-  > `listen` 监听端口号
+    ```
+    > `listen` 监听端口号
 
-  > `location` url：主机号+端口+/harbor,就会访问location下的配置的文件
-  
-  > `alis` 访问的绝对路径
+    > `location` url：主机号+端口+/harbor,就会访问location下的配置的文件
+    
+    > `alis` 访问的绝对路径
 
-  > `root` 访问路径=root+lcoation后的url,如果访问 主机号/images/pic.jpg就是访问/root/images/pic.jpg
+    > `root` 访问路径=root+lcoation后的url,如果访问 主机号/images/pic.jpg就是访问/root/images/pic.jpg
 
-  > `autoindex on` 打开目录浏览功能 可以设置location /{ autoindex on }来开启整个虚拟机目录流量
+    > `autoindex on` 打开目录浏览功能 可以设置location /{ autoindex on }来开启整个虚拟机目录流量
 
-  > `autoindex_localtime on` 显示的文件时间为文件的服务器时间
+    > `autoindex_localtime on` 显示的文件时间为文件的服务器时间
 
   * 修改配置后需要重新载入nginx配置 `nginx -s reload`
 
@@ -61,6 +61,6 @@
 
 * 防火墙打开后sshl无法连接，除非开放端口
 
-  [参考](https://www.cnblogs.com/yuxuan007/p/8043419.html)
+  [常用命令](https://www.cnblogs.com/yuxuan007/p/8043419.html)
 
   `sudo ufw status` 检查防火墙状态
