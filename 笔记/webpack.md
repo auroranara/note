@@ -1,4 +1,4 @@
-[教程](https://juejin.im/post/5bd66efcf265da0a8a6af2d2)
+[参考文档](https://juejin.im/post/5bd66efcf265da0a8a6af2d2)
 
 ```
 // webpack.config.js
