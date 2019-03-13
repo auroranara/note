@@ -10,7 +10,9 @@
 
 <body>
   <div class="container" id="container">
-    <div class="item" id="item">1111</div>
+    <div class="item" id="item1">item1</div>
+    <div class="item" id="item2">item2</div>
+    <div class="item" id="item3">item3</div>
   </div>
 </body>
 <style>
@@ -31,18 +33,38 @@
     /* vertical-align: middle; */
     line-height: initial;
   }
+
+  .bottom {
+    background: pink;
+  }
 </style>
 <script>
-  const container = document.getElementsByClassName('container')
+  const container = document.getElementById('container')
   const item = document.getElementById('item')
-  console.log('container', container);
+  const bottom = document.getElementById('bottom')
 
-  // container.addEventListener('click', e => {
-  //   console.log('click container')
-  // }, true)
-  // item.addEventListener('click', e => {
-  //   console.log('click item')
-  // }, true)
+  container.addEventListener('click', e => {
+    const id = e.target.id
+    // switch (id) {
+    //   case 'item1':
+    //     console.log('11')
+    //     break;
+    //   case 'item2':
+    //     console.log('22')
+    //     break;
+    //   case 'item3':
+    //     console.log('33')
+    //     break;
+    //   default:
+    //     console.log('none')
+    //     break;
+    // }
+    if (e.target.matches('div#item1')) { // 仅支持IE9以后
+      console.log('11');
+
+    }
+
+  }, false)
 </script>
 
 </html>
