@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<!-- 如果需要左右两边与中间元素等高 只需要设置margin-bottom为-$ big_value,padding-bottom为$ big_value即可,$ big_value为和最高列高度一致或超出最高列高度 -->
+
+<body>
+  <!-- 圣杯 -->
+  <div class="main2">
+    <div class="center">main2 center</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+  </div>
+  <!-- 双飞燕 -->
+  <div class="main1">
+    <div class="center">
+      <div class="item">
+        main1 center
+        <p>11</p>
+        <p>11</p>
+        <p>11</p>
+        <p>11</p>
+        <p>11</p>
+        <p>11</p>
+      </div>
+    </div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+  </div>
+</body>
+<style>
+  .main1 {
+    margin-top: 10px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .main1 .center {
+    width: 100%;
+    min-height: 100px;
+    float: left;
+  }
+
+  .item {
+    background: pink;
+    height: 100%;
+    /* 另一种方案：让父元素main1的padding为0 110px，width为calc(100% - 220px)，因为chrome浏览器默认box-sizing为content-box */
+    margin: 0 110px;
+    /* margin决定了宽度 */
+  }
+
+  .main1 .left {
+    background: gold;
+    float: left;
+    width: 100px;
+    min-height: 100px;
+    margin-left: -100%;
+    /* margin-bottom和padding-bottom参数是为了让该列高度与容器等高*/
+    padding-bottom: 32767px;
+    margin-bottom: -32767px;
+    /* padding-bottom: 1000em;
+	  margin-bottom: -999.5em;*/
+  }
+
+  .main1 .right {
+    background: gold;
+    float: left;
+    width: 100px;
+    min-height: 100px;
+    margin-left: -100px;
+  }
+
+  .main2 {
+    padding: 0 110px;
+    overflow: hidden;
+  }
+
+  .main2 .center {
+    float: left;
+    background: pink;
+    width: 100%;
+    height: 100px;
+  }
+
+  .main2 .left {
+    float: left;
+    background: gold;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin-left: -100%;
+    left: -110px;
+  }
+
+  .main2 .right {
+    float: left;
+    background: gold;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin-left: -100px;
+    right: -110px;
+  }
+</style>
+
+</html>
