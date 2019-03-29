@@ -9,58 +9,40 @@
 </head>
 
 <body>
-  <div class="item1" id="item1">
-    item1
-    <div class="item2" id="item2">
-      item2
-      <div class="item3" id="item3">item3</div>
-    </div>
+  <div class="container">
+    <div class="item"></div>
   </div>
 </body>
 <style>
   body {
     width: 100vw;
     height: 100vh;
-    padding: 50px;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .item1 {
-    width: 100%;
-    height: 100%;
-    padding: 50px;
-    border: 1px solid black;
-    box-sizing: border-box;
+  .container {
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    padding: 10px;
   }
 
-  .item2 {
+  .item {
     width: 100%;
     height: 100%;
-    padding: 50px;
-    border: 1px solid black;
-    box-sizing: border-box;
-  }
-
-  .item3 {
-    width: 100%;
-    height: 100%;
-    border: 1px solid black;
+    border: 1px solid red;
     box-sizing: border-box;
   }
 </style>
 <script>
-  const item1 = document.getElementById('item1')
-  const item2 = document.getElementById('item2')
-  const item3 = document.getElementById('item3')
-  item1.addEventListener('click', () => {
-    console.log('111');
-  }, false)
-  item2.addEventListener('click', () => {
-    console.log('222');
-  }, false)
-  item3.addEventListener('click', () => {
-    console.log('333');
-  }, false)
+  const item = document.querySelector('.item');
+  console.log(`clientTop:${item.clientTop}`)  // 1
+  console.log(`scrollHeight:${item.scrollHeight}`)  // 298
+  console.log(`scrollTop:${item.scrollTop}`)  // 0
+  console.log(`offsetTop:${item.offsetTop}`)  // 35
+
 </script>
 
 </html>
