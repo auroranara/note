@@ -1,21 +1,21 @@
 #### 数组降解
 
-降解数组（二维数组到一维数组）：
+* 降解数组（二维数组到一维数组）：
 
 	const flatten1=arr=>[].concat(...arr)
 
-多维数组的降解：
+* 多维数组的降解：
 	
-	function fun1(arr){
-		const flatten=arr=>[].concat(...arr); // flatten方法可降解二维数组为一维数组
-		return flatten(arr.map(item=>(Array.isArray(item) ? fun1(item) : item)))
-	}
+      function fun1(arr){
+        const flatten=arr=>[].concat(...arr); // flatten方法可降解二维数组为一维数组
+        return flatten(arr.map(item=>(Array.isArray(item) ? fun1(item) : item)))
+      }
 
-	function fun2(arr){
-		return arr.reduce((a,v)=>a.concat(Array.isArray(v) ? fun2(v) : v), [])
-	} 
-	// reduce方法传入一个callback和一个参数[]（这个参数为第一次调用callback时初始值a的值）,
-	如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
+      function fun2(arr){
+        return arr.reduce((a,v)=>a.concat(Array.isArray(v) ? fun2(v) : v), [])
+      } 
+      // reduce方法传入一个callback和一个参数[]（这个参数为第一次调用callback时初始值a的值）,
+      如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
 ### 保持x位小数
 
 	function fun(num,x){return Number(`${Math.round(`${num}e${x}`)}e-${x}`)}
@@ -140,7 +140,7 @@ const partition = (arr, left, right) => {
   arr[left] = key
   return left
 }
-// 把一次快排后的key左侧和key右侧再次快排
+// 把一次快排后的key左侧和key右侧分别进行快排
 const quickSort = (arr, left = 0, right = arr.length - 1) => {
   if (left >= right) return
   const pivot = partition(arr, left, right)

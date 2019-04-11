@@ -9,40 +9,45 @@
 </head>
 
 <body>
-  <div class="container" id="container">
-    <div class="item" id="item">1111</div>
+  <div class="container">
+    <div class="item"></div>
   </div>
 </body>
 <style>
+  body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .container {
-    width: 600px;
-    height: 600px;
-    border: 1px solid pink;
-    position: relative;
-    line-height: 600px;
-    text-align: center;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .item {
-    width: 100px;
-    /* height: 100px; */
-    border: 2px solid gold;
-    display: inline-block;
-    /* vertical-align: middle; */
-    line-height: initial;
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+    box-sizing: border-box;
+    padding: 5px;
   }
 </style>
 <script>
-  const container = document.getElementsByClassName('container')
-  const item = document.getElementById('item')
-  console.log('container', container);
+  const item = document.querySelector('.item');
+  console.log(`clientTop:${item.clientTop}`)  // 1 顶部边框宽度（border）
+  console.log(`clientHeight:${item.clientHeight}`)  // 276  可见部分高度（不包括border）
+  console.log(`scrollHeight:${item.scrollHeight}`)  // 276  元素总高度（不包括border）
+  console.log(`scrollTop:${item.scrollTop}`)  // 0  
+  console.log(`offsetTop:${item.offsetTop}`)  // 46  
+  console.log(`offsetHeight:${item.offsetHeight}`);  // 278 垂直高度（包含border、padding）
+  console.log(`getBoundingClientRect:${item.getBoundingClientRect()}`);
 
-  // container.addEventListener('click', e => {
-  //   console.log('click container')
-  // }, true)
-  // item.addEventListener('click', e => {
-  //   console.log('click item')
-  // }, true)
 </script>
 
 </html>
