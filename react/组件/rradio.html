@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+class Radio extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      radioValue:null,
+    }
+    this.onChange=this.onChange.bind(this)
+  }
+
+  onChange(){
+    const {onChange}=this.props
+    if(!onChange)return
+    onChange(e.target.value,e)
+  }
+
+  render(){
+    const {value,children}=this.props
+    const {radioValue}=this.state
+    return(
+      <div>
+        <input id={value} checked={radioValue===value} type="radio" name="city" value={value} onChange={this.onChange} />
+        <label for={value}>{children}</label> 
+      </div>
+    )
+  }
+}
+class RadioGroup extends React.Component{
+  render(){
+    const {value,options}=this.props
+    return(
+      <div>
+      {options&&options.length>0?options.map(({value,label},i)=>(
+        <Radio key={i} value={value}>{label}</Radio>
+      )):}
+    </div>
+    )
+  }
+}
+
+class myPage extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      radioValue:null,
+    }
+    this.onChange=this.onChange.bind(this)
+  }
+  onChange(value){
+    
+  }
+  render(){
+    const options=[
+      {label:'无锡',value:'wuxi'},
+      {label:'苏州',value:'suzhou'},
+    ]
+    return(<RadioGroup options value={radioValue} onChange={this.onChange} />)
+  }
+}
+ReactDOM.render(<myPage />,document.getElementById('root'))
+</script>
+<style>
+  input[type='radio']+label {
+    position: relative;
+    padding-left: 1.5em;
+  }
+
+  input[type='radio']+label::before {
+    content: '\a0';
+    display: inline-block;
+    font-size: 12px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 1px solid rgb(32, 96, 112);
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto .4em auto -1.5em;
+  }
+
+  input[type='radio']:checked+label::before {
+    background: rgb(32, 96, 112);
+    background-clip: content-box;
+    padding: .2em;
+  }
+
+  input[type='radio'] {
+    position: absolute;
+    visibility: hidden;
+  }
+</style>
+
+</html>
