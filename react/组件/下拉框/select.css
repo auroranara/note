@@ -1,0 +1,40 @@
+.select-section {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.65);
+  position: relative;
+  transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.3s;
+}
+.select-section:hover {
+  border-color: #40a9ff;
+}
+.select-section .select-section_rendered {
+  margin: 0 11px;
+  line-height: 30px;
+}
+.select-section .select-section_rendered .selected-value {
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: nowrap;
+}
+.select-section .select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translate(0, -50%);
+  font-size: 12px;
+}
+.select-section .select-arrow * {
+  line-height: 1;
+}
+.select-section .select-arrow .select-icon {
+  display: block;
+}
+.select-section-open {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 支持JSX -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+  <link rel="stylesheet" href="./select.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+class Select extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      selectValue:null,
+    }
+    this.onChange=this.onChange.bind(this)
+    this.handleOpenSelect=this.handleOpenSelect.bind(this)
+  }
+  onChange(e){
+    const selectValue=e.target.value
+    this.setState({selectValue})
+  }
+  handleOpenSelect(e){
+    console.log(e);
+    
+    const dom=e.target
+    console.log('dom.className',dom.className);
+    
+    // dom.className='select-section-open'
+  }
+  render(){
+    const {selectValue}=this.state
+    const options=[
+      {label:'无锡',value:'wuxi'},
+      {label:'苏州',value:'suzhou'},
+      {label:'上海',value:'shanghai'},
+    ]
+    return(
+      <div style={{width:'120px'}}>
+        <div className="select-section" onClick={this.handleOpenSelect}>
+          <div className="select-section_rendered">
+            <div className="selected-value">无锡</div>
+          </div>
+          <span className="select-arrow">
+            <i className="select-icon" aria-label="图标 down">
+              <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path>
+              </svg>
+            </i> 
+          </span>
+        </div>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<Select />,document.getElementById('root'))
+</script>
+
+</html>
