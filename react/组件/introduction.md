@@ -1,0 +1,1 @@
+* vscode 安装插件 easy less，ctrl+s保存时.less文件自动编译成.css文件
