@@ -18,7 +18,7 @@
       如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
 ### 保持x位小数
 
-	function fun(num,x){return Number(`${Math.round(`${num}e${x}`)}e-${x}`)}
+	function fun(num,x=0){return Number(`${Math.round(`${num}e${x}`)}e-${x}`)}
 即 Math.round(2.256\*10^2)*10^-2=2.26
 
 ### 用好filter、map和其他ES6新增的高阶遍历函数
