@@ -11,7 +11,7 @@
   <!-- 支持JSX -->
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
-  <link rel="stylesheet" href="./select.css">
+  <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@ class Select extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      selectValue:'wuxi',
+      selectValue:'',
       isOpen:false,
     }
     this.onChange=this.onChange.bind(this)
@@ -30,8 +30,7 @@ class Select extends React.Component{
     this.handleBlue=this.handleBlue.bind(this)
     this.renderDropList=this.renderDropList.bind(this)
   }
-  onChange(e){
-    const selectValue=e.target.value
+  onChange(selectValue){
     this.setState({selectValue})
   }
   handleOpenSelect(e){
@@ -40,7 +39,7 @@ class Select extends React.Component{
       this.setState({isOpen:!pre.isOpen})
     })
   }
-  handleBlue(){
+  handleBlue(e){
     this.setState({isOpen:false})
   }
   renderDropList(){
@@ -48,11 +47,11 @@ class Select extends React.Component{
     const {options}=this.props
     return(
       <div style={{position:'absolute',top:'0px',left:'0px',width:'100%'}}>
-        <div className={`select-dropdown ${isOpen?'':'select-dropdown-hidden'}`} style={{width:'120px',top:'50px',left:'10px'}}> 
-          <div >
+        <div className={`select-dropdown ${isOpen?'':'select-dropdown-hidden'}`} style={{width:'120px',top:'40px',left:'0'}}> 
+          <div>
             <ul className="dropdown-menu">
               {options.map(({value,label},i)=>(
-                <li className={`dropdown-menu-item ${selectValue===value?'dropdown-menu-item-selected':''}`} key={i}>{label}</li>
+                <li className={`dropdown-menu-item ${selectValue===value?'dropdown-menu-item-selected':''}`} key={i} onClick={()=>this.onChange(value)}>{label}</li>
               ))}
             </ul>
           </div>
@@ -62,12 +61,13 @@ class Select extends React.Component{
   }
   render(){
     const {selectValue,isOpen}=this.state
+    const {value,options}=this.props
     return(
       <div style={{width:'100%',height:'100%',padding:'10px',boxSizing:'border-box'}}>
         <div style={{width:'120px'}}>
           <div tabindex="0" onBlur={this.handleBlue} className={isOpen?"select-section select-section-open" :"select-section"} onClick={this.handleOpenSelect}>
             <div className="select-section_rendered">
-              <div className="selected-value">无锡</div>
+              {selectValue&&<div className="selected-value">{options.find(item=>item.value===selectValue).label}</div>}
             </div>
             <span className="select-arrow">
               <i className="select-icon" aria-label="图标 down">
@@ -76,9 +76,9 @@ class Select extends React.Component{
                 </svg>
               </i> 
             </span>
+            {this.renderDropList()}
           </div>
         </div>
-        {this.renderDropList()}
       </div>
     )
   }
@@ -88,6 +88,7 @@ const options=[
       {label:'苏州',value:'suzhou'},
       {label:'上海',value:'shanghai'},
     ]
+
 ReactDOM.render(<Select options={options} />,document.getElementById('root'))
 </script>
 

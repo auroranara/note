@@ -37,10 +37,10 @@
 		:before
 		:after
 		:link  //未访问的链接
-		:visited  //以访问的链接
+		:visited  //已访问的链接
 		:hover  //:hover必须放在:link、:visited之后才生效
 		:active  //:active必须放在:hover之后才生效
-		.main div:nth-child()  // main类子元素下第n个div
+		.main div:nth-child()  // main类子元素中第n个div
 		.main div:nth-of-type(n)  //main类子元素为div中的第n个div
 
 * 伪元素(IE8不支持双冒号)

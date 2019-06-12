@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>开关按钮</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 支持JSX -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+  class Switch extends React.Component {
+    constructor(props){
+      super(props)
+      this.handleChange=this.handleChange.bind(this)
+    }
+    handleChange(){
+      const {handleChange,checked}=this.props
+      handleChange(!checked)
+    }
+    render() {
+      const {
+        checked, // 是否选中（Boolean）
+        checkedChildren, // 选中时显示
+        unCheckedChildren, // 未选中时显示
+        }=this.props
+      return (
+          <button type="button" role="switch" aria-checked={checked} class={checked?'switch switch-checked':'switch'} onClick={this.handleChange}>
+            {(checkedChildren||unCheckedChildren)&&(<span class="switch-inner">{checked?checkedChildren:unCheckedChildren}</span>)}
+          </button>
+      )
+    }
+  }
+  class Page extends React.Component {
+    constructor(props){
+      super(props)
+      this.state={
+        checked:false,
+      }
+      this.handleChange=this.handleChange.bind(this)
+    }
+    handleChange(checked){
+      this.setState({checked})
+    }
+    render() {
+      const {checked}=this.state
+      return (
+        <div>
+         <Switch checked={checked} handleChange={this.handleChange} checkedChildren="开" unCheckedChildren="关" />
+        <div style={{marginTop:'10px'}}> value:{checked?'选中':'未选中'}</div>
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(<Page />, document.getElementById('root'))
+</script>
+<style>
+  .switch {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 22px;
+    min-width: 44px;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    font-size: 14px;
+    list-style: none;
+    outline: none;
+    cursor: pointer;
+    transition: all .36s;
+  }
+
+  .switch-checked {
+    background-color: #1890ff;
+  }
+
+  .switch::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    transition: all .36s cubic-bezier(.78, .14, .15, .86);
+  }
+
+  .switch-checked::after {
+    left: 100%;
+    transform: translateX(-100%);
+    margin-left: -1px;
+    box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+  }
+
+  .switch-inner {
+    color: #fff;
+    margin-right: 6px;
+    margin-left: 24px;
+  }
+
+  .switch-checked .switch-inner {
+    margin-right: 24px;
+    margin-left: 6px;
+  }
+</style>
+
+</html>
