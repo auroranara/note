@@ -1,3 +1,4 @@
+[JS方法速查——掘金](https://juejin.im/post/5d0e3e27f265da1b7f298815)
 #### 数组降解
 
 * 降解数组（二维数组到一维数组）：
@@ -49,7 +50,7 @@ Set 对象允许你存储任何类型的唯一值，无论是原始值或者是�
 
 **6.生成由随机整数组成的数组，数组长度和元素大小可自定义**
 
-	const gen=(length,limit)=>Array.from({length},_=>Math.floor(Math.random()*limit))
+	const gen=(length,limit)=>Array.from({length},()=>Math.floor(Math.random()*limit))
 
 ### 用递归代替循环
 
@@ -105,7 +106,8 @@ const fun = (a, b) => {
 
 **给数组定义一个function，返回重复元素**
 
-```Array.prototype.extraChar = function(){
+```
+  Array.prototype.extraChar = function(){
       var cacheExtraChar = []; // 缓存重复出现的字符
       var that = this; // 缓存 this;
       this.map(function(item,index){
