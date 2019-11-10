@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <div class="child-1">
+      <div class="child-1-1">
+        <div class="child-1-1-1"></div>
+      </div>
+      <div class="child-1-2">1-3</div>
+    </div>
+    <div class="child-2"> </div>
+    <div class="child-3">
+      <div class="child3-1">3-1</div>
+    </div>
+  </div>
+</body>
+<script>
+
+  // 深度优先遍历
+  function deepTraversal1(node) {
+    let stacks = []
+    let nodes = []
+    if (!node) return []
+    stacks.push(node)
+    while (stacks.length) {
+      const item = stacks.shift()
+      nodes.push(item)
+      const children = item.children
+      for (let i = children.length - 1; i >= 0; i--) {
+        stacks.unshift(children[i])
+      }
+    }
+    return nodes
+  }
+
+  function deepTraversal2(node) {
+    let nodes = []
+    if (!node) return []
+    const children = node.children
+    nodes.push(node)
+    for (let i = 0; i < children.length; i++) {
+      nodes = [...nodes, ...deepTraversal2(children[i])]
+    }
+    return nodes
+  }
+
+  // 广度优先遍历
+  function widthTraversal1(node) {
+    let stacks = []
+    let nodes = []
+    if (!node) return []
+    stacks.push(node)
+    while (stacks.length) {
+      const item = stacks.shift()
+      nodes.push(item)
+      const children = item.children
+      for (let i = 0; i < children.length; i++) {
+        stacks.push(children[i])
+      }
+    }
+    return nodes
+  }
+  const node = document.querySelector('div')
+  const nodes = deepTraversal2(node)
+  console.log('nodes', nodes);
+
+</script>
+
+</html>

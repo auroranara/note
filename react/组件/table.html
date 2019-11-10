@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 支持JSX -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+class Table extends React.Component{
+
+  render(){
+    return(
+      <div>
+        <table>
+        <thead class="table-thead">
+          <tr>
+            <th>名字</th>
+            <th>性别</th>
+          </tr>
+        </thead>
+        <tbody class="table-tbody">
+          <tr>
+            <td>坂本</td>
+            <td>男</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    )
+  }
+}
+class Page extends React.Component{
+
+  render(){
+    return(
+      <Table />
+    )
+  }
+}
+ReactDOM.render(<Page />,document.querySelector('#root'))
+</script>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    border-radius: 4px 4px 0 0;
+    font-size: 14px;
+  }
+
+  .table-thead>tr>th,
+  .table-tbody>tr>td {
+    padding: 16px;
+  }
+
+  .table-thead>tr>th {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .table-tbody>tr>td {
+    border-bottom: 1px solid #e8e8e8;
+    transition: all .3s, border 0s;
+  }
+
+  .table-tbody>tr:hover>td {
+    background: #e6f7ff;
+  }
+</style>
+
+</html>

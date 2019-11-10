@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="can" width="500" height="500"></canvas>
+</body>
+<script>
+  const dom = document.getElementById("can")
+  const ctx = dom.getContext('2d')
+  const maxWidth = dom.width - 2
+  const maxHeight = dom.height - 2
+  let ani = null;
+  ctx.translate(1, 1)
+  ctx.save()
+  ctx.fillStyle = 'black'
+  ctx.strokeRect(0, 0, maxWidth, maxHeight)
+  ctx.restore()
+
+  const ball = {
+    x: 11,
+    y: 11,
+    vx: 3,
+    vy: 1,
+    color: 'rgba(255,255,255,0.3)',
+    radius: 10, // 半径
+    draw: function () {
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false)
+      ctx.closePath()
+      ctx.fillStyle = this.color
+      ctx.fill()
+      ctx.restore()
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, maxWidth, maxHeight);
+    ball.draw()
+    if (ball.x + ball.vx > maxWidth || ball.x + ball.vx < 0) {
+      ball.vx = -ball.vx
+      ball.x += ball.vx
+    } else ball.x += ball.vx
+
+    if (ball.y + ball.vy > maxHeight || ball.y + ball.vy < 0) {
+      ball.y = - ball.vy
+      ball.y += ball.vy
+    } else ball.y += ball.vy
+    ani = requestAnimationFrame(draw)
+  }
+  dom.addEventListener('mouseover', function (e) {
+    cancelAnimationFrame(ani)
+  })
+  dom.addEventListener('mouseout', function (e) {
+    ani = requestAnimationFrame(draw)
+  })
+  draw()
+</script>
+
+</html>

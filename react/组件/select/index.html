@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 支持JSX -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+class Select extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      selectValue:'',
+      isOpen:false,
+    }
+    this.onChange=this.onChange.bind(this)
+    this.handleOpenSelect=this.handleOpenSelect.bind(this)
+    this.handleBlue=this.handleBlue.bind(this)
+    this.renderDropList=this.renderDropList.bind(this)
+  }
+  onChange(selectValue){
+    this.setState({selectValue})
+  }
+  handleOpenSelect(e){
+    const {isOpen}=this.state
+    this.setState(pre=>{
+      this.setState({isOpen:!pre.isOpen})
+    })
+  }
+  handleBlue(e){
+    this.setState({isOpen:false})
+  }
+  renderDropList(){
+    const {selectValue,isOpen}=this.state
+    const {options}=this.props
+    return(
+      <div style={{position:'absolute',top:'0px',left:'0px',width:'100%'}}>
+        <div className={`select-dropdown ${isOpen?'':'select-dropdown-hidden'}`} style={{width:'120px',top:'40px',left:'0'}}> 
+          <div>
+            <ul className="dropdown-menu">
+              {options.map(({value,label},i)=>(
+                <li className={`dropdown-menu-item ${selectValue===value?'dropdown-menu-item-selected':''}`} key={i} onClick={()=>this.onChange(value)}>{label}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  render(){
+    const {selectValue,isOpen}=this.state
+    const {value,options}=this.props
+    return(
+      <div style={{width:'100%',height:'100%',padding:'10px',boxSizing:'border-box'}}>
+        <div style={{width:'120px'}}>
+          <div tabindex="0" onBlur={this.handleBlue} className={isOpen?"select-section select-section-open" :"select-section"} onClick={this.handleOpenSelect}>
+            <div className="select-section_rendered">
+              {selectValue&&<div className="selected-value">{options.find(item=>item.value===selectValue).label}</div>}
+            </div>
+            <span className="select-arrow">
+              <i className="select-icon" aria-label="图标 down">
+                <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path>
+                </svg>
+              </i> 
+            </span>
+            {this.renderDropList()}
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+const options=[
+      {label:'无锡',value:'wuxi'},
+      {label:'苏州',value:'suzhou'},
+      {label:'上海',value:'shanghai'},
+    ]
+
+ReactDOM.render(<Select options={options} />,document.getElementById('root'))
+</script>
+
+</html>

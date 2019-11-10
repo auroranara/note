@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 支持JSX -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script type="text/babel">
+class Radio extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      radioValue:null,
+    }
+    this.onRadioChange=this.onRadioChange.bind(this)
+  }
+
+  onRadioChange(e){
+    const {onRadioChange,hasGroup}=this.props
+    const radioValue=e.target.value
+    if(hasGroup){
+      onRadioChange(e)
+    }else{
+      this.setState({radioValue})
+    }
+  }
+
+  render(){
+    const {value,children,groupValue,hasGroup,name,...otherProps}=this.props
+    const {radioValue}=this.state
+    return(
+      <div {...otherProps}>
+        <input id={value} checked={hasGroup?groupValue===value:radioValue===value} type="radio" name={name} value={value} onChange={this.onRadioChange} />
+        <label for={value}>{children}</label> 
+      </div>
+    )
+  }
+}
+class RadioGroup extends React.Component{
+  constructor(props){
+    super(props)
+    this.onRadioChange=this.onRadioChange.bind(this)
+  }
+  onRadioChange(e){
+    const {onChange}=this.props
+    onChange(e.target.value)
+  }
+  render(){
+    const {value:groupValue,options,children,type,name='default'}=this.props
+    const defaultProps={
+          groupValue,
+          onRadioChange:this.onRadioChange,
+          hasGroup:true,
+          name,
+        }
+    return(
+      <div>
+      {(options&&options.length>0)?options.map(({value,label},i)=>(
+        <Radio key={i} value={value} {...defaultProps}>{label}</Radio>
+      )):React.Children.map(children,(child)=>{
+        return React.cloneElement(child,defaultProps)
+      })}
+    </div>
+    )
+  }
+}
+
+class FormPage extends React.Component{
+constructor(props){
+    super(props)
+    this.state={
+      radioValue:null,
+    }
+    this.onChange=this.onChange.bind(this)
+  }
+  onChange(radioValue){
+    this.setState({radioValue})
+  }
+  render(){
+    const {radioValue}=this.state
+    const options=[
+      {label:'无锡',value:'wuxi'},
+      {label:'苏州',value:'suzhou'},
+    ]
+    return(
+      <div>
+        <RadioGroup options={options} value={radioValue} onChange={this.onChange} />
+        <div>radio值：{radioValue}</div>
+      </div>
+      // <div>
+      //   <RadioGroup value={radioValue} onChange={this.onChange}>
+      //       {options.map(({value,label},i)=>(
+      //         <Radio style={{display:'inline-block'}} key={i} value={value}>{label}</Radio>
+      //       ))}
+      //   </RadioGroup>
+      //   <div>radio值：{radioValue}</div>
+      // </div>
+    )
+  }
+}
+ReactDOM.render(<FormPage />,document.getElementById('root'))
+</script>
+<style>
+  input[type='radio']+label {
+    position: relative;
+    padding-left: 1.5em;
+    cursor: pointer;
+  }
+
+  input[type='radio']+label::before {
+    content: '\a0';
+    display: inline-block;
+    font-size: 12px;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto .4em auto -1.5em;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  input[type='radio']:checked+label::before {
+    background: rgb(24, 144, 255);
+    background-clip: content-box;
+    border-color: #1890ff;
+    padding: .2em;
+  }
+
+  input[type='radio'] {
+    position: absolute;
+    visibility: hidden;
+  }
+</style>
+
+</html>

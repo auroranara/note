@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="heart"></div>
+</body>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background: rgb(255, 238, 202)
+  }
+
+  .heart {
+    width: 20px;
+    height: 20px;
+    background: tomato;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+
+  .heart:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: tomato;
+    position: absolute;
+    border-radius: 50%;
+    top: -50%;
+  }
+
+  .heart:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: tomato;
+    position: absolute;
+    border-radius: 50%;
+    left: 50%;
+  }
+</style>
+
+</html>

@@ -9,44 +9,75 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="item"></div>
+  <div id="animationWindow">
   </div>
 </body>
 <style>
   body {
-    width: 100vw;
-    height: 100vh;
+    background-color: #29AFB0;
+    overflow: hidden;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
 
-  .container {
-    width: 300px;
-    height: 300px;
-    border: 1px solid red;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .item {
-    width: 100%;
+  body,
+  html {
     height: 100%;
-    border: 1px solid red;
-    box-sizing: border-box;
-    padding: 5px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #animationWindow {
+    width: 50%;
+    ;
+    height: 50%;
+    -webkit-tap-highlight-color: transparent;
+
+    cursor: pointer;
   }
 </style>
 <script>
-  const item = document.querySelector('.item');
-  console.log(`clientTop:${item.clientTop}`)  // 1 顶部边框宽度（border）
-  console.log(`clientHeight:${item.clientHeight}`)  // 276  可见部分高度（不包括border）
-  console.log(`scrollHeight:${item.scrollHeight}`)  // 276  元素总高度（不包括border）
-  console.log(`scrollTop:${item.scrollTop}`)  // 0  
-  console.log(`offsetTop:${item.offsetTop}`)  // 46  
-  console.log(`offsetHeight:${item.offsetHeight}`);  // 278 垂直高度（包含border、padding）
-  console.log(`getBoundingClientRect:${item.getBoundingClientRect()}`);
+  var select = function (s) {
+    return document.querySelector(s);
+  },
+    selectAll = function (s) {
+      return document.querySelectorAll(s);
+    },
+    animationWindow = select('#animationWindow'),
+    animData = {
+      wrapper: animationWindow,
+      animType: 'svg',
+      loop: false,
+      prerender: false,
+      autoplay: false,
+      path: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/egg_flip.json'
+    }, anim;
+
+  anim = bodymovin.loadAnimation(animData);
+  anim.addEventListener('DOMLoaded', onDOMLoaded);
+  anim.setSpeed(15);
+
+  function onDOMLoaded(e) {
+
+    animationWindow.onclick = function (e) {
+      if (anim.currentFrame > 0) {
+        anim.playSegments([anim.currentFrame, 0], true);
+        TweenMax.to('.eggGroup', 1, {
+          x: 0,
+          ease: Elastic.easeOut.config(0.9, 0.38)
+        })
+      } else {
+        TweenMax.to('.eggGroup', 1.4, {
+          x: 73,
+          ease: Elastic.easeOut.config(0.9, 0.38)
+        })
+        anim.playSegments([anim.currentFrame, 300], true)
+      }
+    }
+  }
+
 
 </script>
 
