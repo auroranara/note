@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div style="width:100vh;height:100vw">
+    <input id="input" />
+    输入框内容：<span id="text"></span>
+  </div>
+</body>
+<script>
+  let data = { value: 'please input', typing: false }
+  const inputDom = document.querySelector('#input')
+  const textDom = document.querySelector('#text')
+
+  function render(value) {
+    textDom.innerHTML = value || content.value
+  }
+  let content = new Proxy(data, {
+    get: function (target, property) {
+      return target[property]
+    },
+    set: function (target, property, value) {
+      target[property] = value
+      // 不是输入中文或者输入中文结束后，才会进行更新
+      if (property === 'value' && !target.typing || property === 'typing' && !value) {
+        render()
+      }
+    },
+  })
+  inputDom.addEventListener('input', function (e) {
+    const value = e.target.value
+    content.value = value
+  }, false)
+  // 监听 如输入中文开始
+  inputDom.addEventListener('compositionstart', function () {
+    content.typing = true
+  }, false)
+  // 监听 如输入中文结束
+  inputDom.addEventListener('compositionend', function () {
+    content.typing = false
+  }, false)
+</script>
+
+</html>
