@@ -19,11 +19,11 @@ module.exports = {
     port: '8088', // 端口号
     inline: true, // 当源文件改变自动刷新页面
     historyApiFallback: true, // 所有跳转指向index.html
-    // scripts中命令：webpack-wev-server --open 启动本地服务器并打开浏览器
+    // scripts中命令：webpack-dev-server --open 启动本地服务器并打开浏览器
     // 默认打开index.html
   },
   devtool: 'source-map', // 打包时生成对应于打包文件的.map文件，使得编译后的代码可读性更高，更易于调试，但会减慢打包速度。
-  /* loader在打包过程中处理源文件，plugins对整个构建过程器作用 */
+  /* loader在打包过程中处理源文件，plugins对整个构建过程起作用 */
   module: {
     rules: [
       // 增加loader，调用外部脚本或工具

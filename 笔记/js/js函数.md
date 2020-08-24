@@ -3,7 +3,9 @@
 
 * 降解数组（二维数组到一维数组）：
 
-	const flatten1=arr=>[].concat(...arr)
+	* const flatten1=arr=>[].concat(...arr)
+
+  * arr.flat(depth) // depth为展开深度，默认为1，可以使用 flat(Infinity)展开全部
 
 * 多维数组的降解：
   * 递归方法：
@@ -16,10 +18,7 @@
         function fun2(arr){
           return arr.reduce((a,v)=>a.concat(Array.isArray(v) ? fun2(v) : v), [])
         } 
-        // reduce方法传入一个callback和一个参数[]（这个参数为第一次调用callback时初始值a的值）,
-        如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
-
-        flat(depth)    // depth为展开深度，默认为1，可以使用 flat(Infinity)展开全部
+        // reduce方法传入一个callback和一个参数[]（这个参数为第一次调用callback时初始值a的值）,如果没有传入初始值，初始值为数组第一个元素，并从第二个参数开始遍历
     ```
     * 迭代方法
     ```js
