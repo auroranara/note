@@ -34,9 +34,10 @@
       const item = stacks.shift()
       nodes.push(item)
       const children = item.children
-      for (let i = children.length - 1; i >= 0; i--) {
-        stacks.unshift(children[i])
-      }
+      // for (let i = children.length - 1; i >= 0; i--) {
+      //   stacks.unshift(children[i])
+      // }
+      stacks = [...item.children, ...stacks];
     }
     return nodes
   }
